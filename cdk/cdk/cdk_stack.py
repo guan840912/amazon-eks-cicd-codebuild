@@ -63,22 +63,16 @@ class CdkStack(core.Stack):
 
         # create codecommit repository .
         repository = codecommit.Repository(self, "CodeCommitRepo", repository_name="EKSLABClusterRepo")
-        
+
         # create codebuild porject .
         project = codebuild.Project(self, "MyProject", project_name="MyProject",source=codebuild.Source.code_commit(repository=repository),
                     environment=codebuild.BuildEnvironment(build_image=codebuild.LinuxBuildImage.from_asset(self, "CustomImage",directory=path.join("../dockerAssets.d")),privileged=True)
-                    ,environment_variables=[   
-                        {
-                            "Name":"CLUSTER_NAME",
-                            "Type":"PLAINTEXT",
-                            "value":cluster.cluster_arn
-                        },
-                        {
-                            "Name":"ECR_REPO_URI",
-                            "Type":"PLAINTEXT",
-                            "value":eksecr.repository_arn
-                        }
-                    ],
+                    ,environment_variables={
+                        "CLUSTER_NAME":{
+                        "value":cluster.cluster_arn},
+                         "ECR_REPO_URI":{
+                         "value": eksecr.repository_arn}
+                    },
                     build_spec=codebuild.BuildSpec.from_object(
                         {
                             "version":"0.2",
