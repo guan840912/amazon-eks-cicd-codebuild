@@ -69,12 +69,14 @@ class CdkStack(core.Stack):
                     environment=codebuild.BuildEnvironment(build_image=codebuild.LinuxBuildImage.from_asset(self, "CustomImage",directory=path.join("../dockerAssets.d")),privileged=True)
                     ,environment_variables=[   
                         {
-                            "name":"CLUSTER_NAME",
-                            "value":"EKSLABCluster5EE45EC9-776d60cf4df14ca49d8bb476108cce7f"
+                            "Name":"CLUSTER_NAME",
+                            "Type":"PLAINTEXT",
+                            "value":cluster.cluster_arn
                         },
                         {
-                            "name":"ECR_REPO_URI",
-                            "value":"295273672130.dkr.ecr.ap-northeast-1.amazonaws.com/eksecr"
+                            "Name":"ECR_REPO_URI",
+                            "Type":"PLAINTEXT",
+                            "value":eksecr.repository_arn
                         }
                     ],
                     build_spec=codebuild.BuildSpec.from_object(
