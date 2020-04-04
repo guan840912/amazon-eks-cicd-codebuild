@@ -12,7 +12,7 @@ def hello():
     name = flask.request.args.get("name", "Flask-demo")
     time = datetime.datetime.now()
     python_version = platform.python_version()
-    aws_platform = os.environ.get('PLATFORM', 'Amazon Web Services Neil Test')
+    aws_platform = os.environ.get('PLATFORM', 'Amazon Web Services Neil')
     return flask.render_template('hello.html',
                                  platform=aws_platform,
                                  flask_version=flask.__version__,
