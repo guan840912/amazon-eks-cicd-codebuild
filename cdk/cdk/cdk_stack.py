@@ -70,11 +70,11 @@ class CdkStack(core.Stack):
                     ,environment_variables=[   
                         {
                             "name":"CLUSTER_NAME",
-                            "value":"${cluster.clusterName}"
+                            "value":"EKSLABCluster5EE45EC9-776d60cf4df14ca49d8bb476108cce7f"
                         },
                         {
                             "name":"ECR_REPO_URI",
-                            "value":"${eksecr.repositoryUri}"
+                            "value":"295273672130.dkr.ecr.ap-northeast-1.amazonaws.com/eksecr"
                         }
                     ],
                     build_spec=codebuild.BuildSpec.from_object(
@@ -91,7 +91,7 @@ class CdkStack(core.Stack):
                                 "build":{
                                     "commands":[
                                         "cd flask-docker-app",
-                                        "`docker build -t $ECR_REPO_URI:$TAG .`",
+                                        "docker build -t $ECR_REPO_URI:$TAG .",
                                         "$(aws ecr get-login --no-include-email)",
                                         "docker push $ECR_REPO_URI:$TAG"
                                         ]
